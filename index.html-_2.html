@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will You Be My Valentine?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #eadcff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .question {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 25px;
+      font-size: 24px;
+      color: orange;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      margin-bottom: 35px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .btn {
+      background: white;
+      padding: 15px 25px;
+      border-radius: 20px;
+      font-size: 20px;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* YES PAGE */
+    .yes-page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .yes-text {
+      background: white;
+      color: #ff5fa2;
+      padding: 25px;
+      border-radius: 25px;
+      font-size: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      margin-bottom: 20px;
+    }
+
+    .photo {
+      width: 260px;
+      border-radius: 22px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Music (starts after interaction) -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2c6b6c9c1f.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- FIRST PAGE -->
+  <div class="container" id="mainPage">
+    <div class="question">
+      Diya, will you be my Valentine? 💜
+    </div>
+
+    <div class="buttons">
+      <div class="btn" onclick="yesClicked()">Yes 🤎</div>
+      <div class="btn" id="noBtn">No 😈</div>
+    </div>
+  </div>
+
+  <!-- YES PAGE -->
+  <div class="yes-page" id="yesPage">
+    <div class="yes-text">
+      Wooohoooooo you’re my Valentine 💖<br>
+      I love youuuuuu 😭💜<br>
+      chiku would be proud 🫶
+    </div>
+
+    <!-- YOUR PHOTO -->
+    <img
+      class="photo"
+      src="valentine.jpeg"
+      alt="Us 💜"
+    />
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const music = document.getElementById("bgMusic");
+
+    function startMusic() {
+      if (music.paused) {
+        music.play();
+      }
+    }
+
+    noBtn.addEventListener("mouseenter", runAway);
+    noBtn.addEventListener("touchstart", runAway);
+
+    function runAway() {
+      startMusic();
+
+      const padding = 80;
+      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+      const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+      const x = Math.random() * maxX + padding / 2;
+      const y = Math.random() * maxY + padding / 2;
+
+      noBtn.style.position = "fixed";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+
+      noBtn.animate(
+        [
+          { transform: "scale(1)" },
+          { transform: "scale(1.25)" },
+          { transform: "scale(1)" }
+        ],
+        { duration: 300 }
+      );
+    }
+
+    function yesClicked() {
+      startMusic();
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("yesPage").style.display = "flex";
+    }
+  </script>
+
+</body>
+</html>
